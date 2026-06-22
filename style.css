@@ -1,0 +1,119 @@
+body {
+    background-color: #1e1e1e;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    font-family: sans-serif;
+}
+
+.app-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+.card-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 750px; /* Exact card width */
+}
+
+.card-label {
+    color: #888;
+    font-size: 36px;
+    margin-bottom: 15px;
+    padding-left: 20px;
+}
+
+.card-outer {
+    --outer-radius: 45px;
+    --card-padding: 30px;
+    
+    background-color: white;
+    padding: var(--card-padding);
+    border-radius: var(--outer-radius);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    height: 1050px; /* Exact card height */
+    box-sizing: border-box;
+}
+
+.card-inner {
+    background-color: #ffc200; /* The yellow background */
+    border: 3px solid #000; /* Added a little black border line */
+    /* Inner corner radius perfectly follows outer curve using round-gap formula */
+    border-radius: calc(var(--outer-radius) - var(--card-padding));
+    padding: 60px 100px 60px 100px; /* Increased padding to squeeze components inward */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.card-title {
+    font-family: 'Frank Ruhl Libre', serif;
+    font-weight: 700;
+    font-size: 80px;
+    text-align: center;
+    margin: 0;
+    padding-bottom: 50px; /* Using padding instead of margin */
+    line-height: 1.1;
+    color: #000;
+}
+
+.card-subtitle {
+    font-family: 'Farsan', system-ui;
+    font-size: 38px;
+    text-align: center;
+    margin: 0;
+    padding-bottom: 30px;
+    color: #000;
+}
+
+.card-image-container {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: calc(100% + 40px); /* Counteract the extra 20px left/right padding */
+    margin-left: -20px;
+    margin-right: -20px;
+    margin-top: 20px;
+    margin-bottom: 60px;
+    overflow: hidden;
+}
+
+.card-image-container img {
+    max-width: 100%;
+    max-height: 300px; /* Prevent it from overflowing vertically */
+    object-fit: contain; /* Ensure it never squishes */
+}
+
+.card-type {
+    position: absolute;
+    bottom: 40px;
+    right: 60px;
+    font-family: 'Farsan', system-ui;
+    font-size: 32px;
+    color: #000;
+}
+
+.controls button {
+    padding: 12px 24px;
+    background-color: #3b82f6;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.controls button:hover {
+    background-color: #2563eb;
+}

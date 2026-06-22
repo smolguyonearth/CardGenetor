@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Card Generator</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts for the typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Farsan&family=Frank+Ruhl+Libre:wght@700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- The card element that will be exported -->
+        <div class="card-wrapper" id="card-node">
+
+
+            <!-- Outer Box -->
+            <div class="card-outer">
+                <!-- Inner Box -->
+                <div class="card-inner">
+                    <h1 class="card-title">Fading Recollection</h1>
+                    <p class="card-subtitle">Retreat from a battle without losses.</p>
+
+                    <div class="card-image-container">
+                        <!-- You can replace this src with your actual transparent PNG image -->
+                        <img src="example/image.png" alt="Example image">
+                    </div>
+
+                    <div class="card-type">TYPE.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button id="export-btn">Download Sample</button>
+        </div>
+    </div>
+
+    <!-- html2canvas library for highly accurate DOM capturing -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
