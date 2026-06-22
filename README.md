@@ -17,7 +17,7 @@ A tool to generate and export custom cards. It provides a web-based interface to
 
 1. **Clone the repository:**
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/smolguyonearth/CardGenetor
    cd "Card Filling"
    ```
 
