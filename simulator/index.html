@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Card Simulator</title>
+    <!-- Modern Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div id="app">
+      <header>
+        <h1>Card Simulator</h1>
+        <p>Cards remaining: <span id="deck-count">70</span></p>
+      </header>
+      
+      <main class="play-area">
+        <div class="deck-container">
+          <div id="deck" class="card deck-card">
+            <!-- Deck card back will be set via CSS/JS -->
+          </div>
+          <div class="label">Draw Pile</div>
+        </div>
+        
+        <div class="drawn-container">
+          <div id="drawn-card" class="card empty">
+            <div class="card-inner">
+              <div class="card-front">
+                <!-- Back image (what you see when it's faced down before flip) -->
+              </div>
+              <div class="card-back">
+                <!-- The actual drawn card image -->
+              </div>
+            </div>
+          </div>
+          <div class="label">Active Card</div>
+        </div>
+      </main>
+
+      <div class="controls">
+        <button id="shuffle-btn" class="btn">Shuffle & Restart</button>
+      </div>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
