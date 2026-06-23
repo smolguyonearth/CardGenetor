@@ -37,9 +37,16 @@
       </header>
       
       <div class="top-area">
-        <div class="deck-container">
-          <div id="deck" class="card deck-card"></div>
-          <div class="label">Draw Pile</div>
+        <div class="piles-container">
+          <div class="deck-container">
+            <div id="deck" class="card deck-card"></div>
+            <div class="label">Draw Pile</div>
+          </div>
+          
+          <div class="deck-container">
+            <div id="discard-pile" class="card deck-card empty"></div>
+            <div class="label">Discard Pile</div>
+          </div>
         </div>
         
         <div class="controls-vertical">
@@ -50,14 +57,9 @@
 
       <main class="player-area">
         <div class="section-title">Your Hand</div>
-        <p class="hint">Click a card to use it</p>
+        <p class="hint">Click a card to inspect it</p>
         <div id="player-hand" class="card-row">
           <!-- Cards injected here -->
-        </div>
-
-        <div class="section-title">Used Cards</div>
-        <div id="player-used" class="card-row used-row">
-          <!-- Used cards injected here -->
         </div>
       </main>
     </div>

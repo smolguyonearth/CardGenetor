@@ -97,6 +97,11 @@ header p {
   padding: 0 2rem;
 }
 
+.piles-container {
+  display: flex;
+  gap: 2rem;
+}
+
 .deck-container {
   display: flex;
   flex-direction: column;

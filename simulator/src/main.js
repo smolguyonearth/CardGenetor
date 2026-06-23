@@ -11,7 +11,7 @@ let deck = [];
 let currentPlayer = 1;
 let isTransitioning = true;
 let hands = { 1: [], 2: [] };
-let usedCards = { 1: [], 2: [] };
+let discardPile = [];
 let currentlyInspectedIndex = null;
 
 // DOM Elements
@@ -24,7 +24,7 @@ const startTurnBtn = document.getElementById('start-turn-btn');
 const endTurnBtn = document.getElementById('end-turn-btn');
 const playerTurnTitle = document.getElementById('player-turn-title');
 const playerHandEl = document.getElementById('player-hand');
-const playerUsedEl = document.getElementById('player-used');
+const discardPileEl = document.getElementById('discard-pile');
 
 const inspectOverlay = document.getElementById('inspect-overlay');
 const inspectCardEl = document.getElementById('inspect-card');
@@ -50,10 +50,11 @@ function initializeGame() {
   deck = shuffle(allCards);
   currentPlayer = 1;
   hands = { 1: [], 2: [] };
-  usedCards = { 1: [], 2: [] };
+  discardPile = [];
   
   updateDeckCount();
   deckEl.classList.remove('empty');
+  updateDiscardPile();
   
   showTransitionScreen(1);
 }
@@ -62,6 +63,16 @@ function updateDeckCount() {
   deckCountEl.textContent = deck.length;
   if (deck.length === 0) {
     deckEl.classList.add('empty');
+  }
+}
+
+function updateDiscardPile() {
+  if (discardPile.length === 0) {
+    discardPileEl.classList.add('empty');
+    discardPileEl.style.backgroundImage = 'none';
+  } else {
+    discardPileEl.classList.remove('empty');
+    discardPileEl.style.backgroundImage = `url(${discardPile[discardPile.length - 1]})`;
   }
 }
 
@@ -98,8 +109,9 @@ function useInspectedCard() {
   if (currentlyInspectedIndex === null) return;
   
   const card = hands[currentPlayer].splice(currentlyInspectedIndex, 1)[0];
-  usedCards[currentPlayer].push(card);
+  discardPile.push(card);
   
+  updateDiscardPile();
   closeInspect();
   renderPlayerArea();
 }
@@ -150,14 +162,9 @@ function createCardElement(url, index, isHand) {
 
 function renderPlayerArea() {
   playerHandEl.innerHTML = '';
-  playerUsedEl.innerHTML = '';
   
   hands[currentPlayer].forEach((url, index) => {
     playerHandEl.appendChild(createCardElement(url, index, true));
-  });
-  
-  usedCards[currentPlayer].forEach((url, index) => {
-    playerUsedEl.appendChild(createCardElement(url, index, false));
   });
 }
 
