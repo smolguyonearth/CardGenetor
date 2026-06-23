@@ -12,6 +12,7 @@ let currentPlayer = 1;
 let isTransitioning = true;
 let hands = { 1: [], 2: [] };
 let usedCards = { 1: [], 2: [] };
+let currentlyInspectedIndex = null;
 
 // DOM Elements
 const deckEl = document.getElementById('deck');
@@ -24,6 +25,12 @@ const endTurnBtn = document.getElementById('end-turn-btn');
 const playerTurnTitle = document.getElementById('player-turn-title');
 const playerHandEl = document.getElementById('player-hand');
 const playerUsedEl = document.getElementById('player-used');
+
+const inspectOverlay = document.getElementById('inspect-overlay');
+const inspectCardEl = document.getElementById('inspect-card');
+const inspectUseBtn = document.getElementById('inspect-use-btn');
+const inspectSendBtn = document.getElementById('inspect-send-btn');
+const inspectCloseBtn = document.getElementById('inspect-close-btn');
 
 // Initialize back image on deck
 deckEl.style.backgroundImage = `url(${backImageUrl})`;
@@ -87,12 +94,43 @@ function drawCard() {
   renderPlayerArea();
 }
 
-function useCard(index) {
-  if (isTransitioning) return;
+function useInspectedCard() {
+  if (currentlyInspectedIndex === null) return;
   
-  const card = hands[currentPlayer].splice(index, 1)[0];
+  const card = hands[currentPlayer].splice(currentlyInspectedIndex, 1)[0];
   usedCards[currentPlayer].push(card);
+  
+  closeInspect();
   renderPlayerArea();
+}
+
+function sendInspectedCard() {
+  if (currentlyInspectedIndex === null) return;
+  
+  const card = hands[currentPlayer].splice(currentlyInspectedIndex, 1)[0];
+  const otherPlayer = currentPlayer === 1 ? 2 : 1;
+  hands[otherPlayer].push(card);
+  
+  closeInspect();
+  renderPlayerArea();
+}
+
+function inspectCard(index) {
+  if (isTransitioning) return;
+  currentlyInspectedIndex = index;
+  const cardUrl = hands[currentPlayer][index];
+  
+  inspectCardEl.style.backgroundImage = `url(${cardUrl})`;
+  
+  const otherPlayer = currentPlayer === 1 ? 2 : 1;
+  inspectSendBtn.textContent = `Send to Player ${otherPlayer}`;
+  
+  inspectOverlay.classList.add('active');
+}
+
+function closeInspect() {
+  inspectOverlay.classList.remove('active');
+  currentlyInspectedIndex = null;
 }
 
 function createCardElement(url, index, isHand) {
@@ -102,7 +140,7 @@ function createCardElement(url, index, isHand) {
   
   if (isHand) {
     cardDiv.classList.add('hand-card');
-    cardDiv.onclick = () => useCard(index);
+    cardDiv.onclick = () => inspectCard(index);
   } else {
     cardDiv.classList.add('used-card');
   }
@@ -128,6 +166,10 @@ deckEl.addEventListener('click', drawCard);
 shuffleBtn.addEventListener('click', initializeGame);
 startTurnBtn.addEventListener('click', startTurn);
 endTurnBtn.addEventListener('click', endTurn);
+
+inspectUseBtn.addEventListener('click', useInspectedCard);
+inspectSendBtn.addEventListener('click', sendInspectedCard);
+inspectCloseBtn.addEventListener('click', closeInspect);
 
 // Start game on load
 initializeGame();
