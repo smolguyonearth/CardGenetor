@@ -3,45 +3,51 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Card Simulator</title>
+    <title>Card Simulator - 2 Player</title>
     <!-- Modern Google Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
   </head>
   <body>
+    <!-- Turn Transition Overlay -->
+    <div id="turn-overlay" class="overlay">
+      <div class="overlay-content">
+        <h2 id="overlay-title">Pass device to Player 1</h2>
+        <button id="start-turn-btn" class="btn primary-btn">Start Turn</button>
+      </div>
+    </div>
+
     <div id="app">
       <header>
-        <h1>Card Simulator</h1>
-        <p>Cards remaining: <span id="deck-count">70</span></p>
+        <h1 id="player-turn-title">Player 1's Turn</h1>
+        <p>Deck remaining: <span id="deck-count">70</span></p>
       </header>
       
-      <main class="play-area">
+      <div class="top-area">
         <div class="deck-container">
-          <div id="deck" class="card deck-card">
-            <!-- Deck card back will be set via CSS/JS -->
-          </div>
+          <div id="deck" class="card deck-card"></div>
           <div class="label">Draw Pile</div>
         </div>
         
-        <div class="drawn-container">
-          <div id="drawn-card" class="card empty">
-            <div class="card-inner">
-              <div class="card-front">
-                <!-- Back image (what you see when it's faced down before flip) -->
-              </div>
-              <div class="card-back">
-                <!-- The actual drawn card image -->
-              </div>
-            </div>
-          </div>
-          <div class="label">Active Card</div>
+        <div class="controls-vertical">
+          <button id="end-turn-btn" class="btn action-btn">End Turn</button>
+          <button id="shuffle-btn" class="btn secondary-btn">Restart Game</button>
+        </div>
+      </div>
+
+      <main class="player-area">
+        <div class="section-title">Your Hand</div>
+        <p class="hint">Click a card to use it</p>
+        <div id="player-hand" class="card-row">
+          <!-- Cards injected here -->
+        </div>
+
+        <div class="section-title">Used Cards</div>
+        <div id="player-used" class="card-row used-row">
+          <!-- Used cards injected here -->
         </div>
       </main>
-
-      <div class="controls">
-        <button id="shuffle-btn" class="btn">Shuffle & Restart</button>
-      </div>
     </div>
     <script type="module" src="/src/main.js"></script>
   </body>
