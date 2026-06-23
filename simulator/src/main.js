@@ -32,6 +32,14 @@ const inspectUseBtn = document.getElementById('inspect-use-btn');
 const inspectSendBtn = document.getElementById('inspect-send-btn');
 const inspectCloseBtn = document.getElementById('inspect-close-btn');
 
+const requestCardBtn = document.getElementById('request-card-btn');
+const randomCardBtn = document.getElementById('random-card-btn');
+
+const giveCardOverlay = document.getElementById('give-card-overlay');
+const giveCardTitle = document.getElementById('give-card-title');
+const giveCardHandEl = document.getElementById('give-card-hand');
+const giveCardCancelBtn = document.getElementById('give-card-cancel-btn');
+
 // Initialize back image on deck
 deckEl.style.backgroundImage = `url(${backImageUrl})`;
 
@@ -145,19 +153,68 @@ function closeInspect() {
   currentlyInspectedIndex = null;
 }
 
-function createCardElement(url, index, isHand) {
+function createCardElement(url, index, isHand, customOnClick = null) {
   const cardDiv = document.createElement('div');
   cardDiv.className = 'card min-card';
   cardDiv.style.backgroundImage = `url(${url})`;
   
   if (isHand) {
     cardDiv.classList.add('hand-card');
-    cardDiv.onclick = () => inspectCard(index);
+    cardDiv.onclick = customOnClick ? customOnClick : () => inspectCard(index);
   } else {
     cardDiv.classList.add('used-card');
   }
   
   return cardDiv;
+}
+
+function takeRandomCard() {
+  if (isTransitioning) return;
+  const otherPlayer = currentPlayer === 1 ? 2 : 1;
+  
+  if (hands[otherPlayer].length === 0) {
+    alert(`Player ${otherPlayer} has no cards!`);
+    return;
+  }
+  
+  const randomIndex = Math.floor(Math.random() * hands[otherPlayer].length);
+  const card = hands[otherPlayer].splice(randomIndex, 1)[0];
+  hands[currentPlayer].push(card);
+  
+  renderPlayerArea();
+}
+
+function requestCard() {
+  if (isTransitioning) return;
+  const otherPlayer = currentPlayer === 1 ? 2 : 1;
+  
+  if (hands[otherPlayer].length === 0) {
+    alert(`Player ${otherPlayer} has no cards to give!`);
+    return;
+  }
+  
+  giveCardTitle.textContent = `Player ${otherPlayer}, pick a card to give to Player ${currentPlayer}`;
+  giveCardHandEl.innerHTML = '';
+  
+  hands[otherPlayer].forEach((url, index) => {
+    const customOnClick = () => giveCard(index);
+    giveCardHandEl.appendChild(createCardElement(url, index, true, customOnClick));
+  });
+  
+  giveCardOverlay.classList.add('active');
+}
+
+function giveCard(index) {
+  const otherPlayer = currentPlayer === 1 ? 2 : 1;
+  const card = hands[otherPlayer].splice(index, 1)[0];
+  hands[currentPlayer].push(card);
+  
+  giveCardOverlay.classList.remove('active');
+  renderPlayerArea();
+}
+
+function cancelRequestCard() {
+  giveCardOverlay.classList.remove('active');
 }
 
 function renderPlayerArea() {
@@ -177,6 +234,10 @@ endTurnBtn.addEventListener('click', endTurn);
 inspectUseBtn.addEventListener('click', useInspectedCard);
 inspectSendBtn.addEventListener('click', sendInspectedCard);
 inspectCloseBtn.addEventListener('click', closeInspect);
+
+requestCardBtn.addEventListener('click', requestCard);
+randomCardBtn.addEventListener('click', takeRandomCard);
+giveCardCancelBtn.addEventListener('click', cancelRequestCard);
 
 // Start game on load
 initializeGame();

@@ -30,6 +30,17 @@
       </div>
     </div>
 
+    <!-- Give Card Overlay -->
+    <div id="give-card-overlay" class="overlay">
+      <div class="overlay-content give-card-content">
+        <h2 id="give-card-title">Player 2, give a card to Player 1</h2>
+        <div id="give-card-hand" class="card-row">
+          <!-- Opponent's hand injected here -->
+        </div>
+        <button id="give-card-cancel-btn" class="btn action-btn">Cancel</button>
+      </div>
+    </div>
+
     <div id="app">
       <header>
         <h1 id="player-turn-title">Player 1's Turn</h1>
@@ -52,6 +63,8 @@
         <div class="controls-vertical">
           <button id="end-turn-btn" class="btn action-btn">End Turn</button>
           <button id="shuffle-btn" class="btn secondary-btn">Restart Game</button>
+          <button id="request-card-btn" class="btn secondary-btn">Request Card</button>
+          <button id="random-card-btn" class="btn secondary-btn">Take Random Card</button>
         </div>
       </div>
 
