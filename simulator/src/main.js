@@ -43,6 +43,36 @@ const giveCardCancelBtn = document.getElementById('give-card-cancel-btn');
 // Initialize back image on deck
 deckEl.style.backgroundImage = `url(${backImageUrl})`;
 
+function saveGameState() {
+  const state = {
+    deck,
+    currentPlayer,
+    isTransitioning,
+    hands,
+    discardPile
+  };
+  localStorage.setItem('cardGameState', JSON.stringify(state));
+}
+
+function loadGameState() {
+  const savedState = localStorage.getItem('cardGameState');
+  if (savedState) {
+    try {
+      const state = JSON.parse(savedState);
+      deck = state.deck;
+      currentPlayer = state.currentPlayer;
+      isTransitioning = state.isTransitioning;
+      hands = state.hands;
+      discardPile = state.discardPile;
+      return true;
+    } catch (e) {
+      console.error('Failed to parse saved state', e);
+      return false;
+    }
+  }
+  return false;
+}
+
 function shuffle(array) {
   let arr = [...array];
   let currentIndex = arr.length, randomIndex;
@@ -54,7 +84,23 @@ function shuffle(array) {
   return arr;
 }
 
-function initializeGame() {
+function initializeGame(forceNew = false) {
+  if (!forceNew && loadGameState()) {
+    updateDeckCount();
+    if (deck.length > 0) deckEl.classList.remove('empty');
+    updateDiscardPile();
+    
+    if (isTransitioning) {
+      showTransitionScreen(currentPlayer);
+    } else {
+      // Resume current turn
+      overlayEl.classList.remove('active');
+      playerTurnTitle.textContent = `Player ${currentPlayer}'s Turn`;
+      renderPlayerArea();
+    }
+    return;
+  }
+
   deck = shuffle(allCards);
   currentPlayer = 1;
   hands = { 1: [], 2: [] };
@@ -65,6 +111,7 @@ function initializeGame() {
   updateDiscardPile();
   
   showTransitionScreen(1);
+  saveGameState();
 }
 
 function updateDeckCount() {
@@ -95,12 +142,14 @@ function startTurn() {
   overlayEl.classList.remove('active');
   playerTurnTitle.textContent = `Player ${currentPlayer}'s Turn`;
   renderPlayerArea();
+  saveGameState();
 }
 
 function endTurn() {
   if (isTransitioning) return;
   currentPlayer = currentPlayer === 1 ? 2 : 1;
   showTransitionScreen(currentPlayer);
+  saveGameState();
 }
 
 function drawCard() {
@@ -111,6 +160,7 @@ function drawCard() {
   
   hands[currentPlayer].push(cardUrl);
   renderPlayerArea();
+  saveGameState();
 }
 
 function useInspectedCard() {
@@ -122,6 +172,7 @@ function useInspectedCard() {
   updateDiscardPile();
   closeInspect();
   renderPlayerArea();
+  saveGameState();
 }
 
 function sendInspectedCard() {
@@ -133,6 +184,7 @@ function sendInspectedCard() {
   
   closeInspect();
   renderPlayerArea();
+  saveGameState();
 }
 
 function inspectCard(index) {
@@ -182,6 +234,7 @@ function takeRandomCard() {
   hands[currentPlayer].push(card);
   
   renderPlayerArea();
+  saveGameState();
 }
 
 function requestCard() {
@@ -211,6 +264,7 @@ function giveCard(index) {
   
   giveCardOverlay.classList.remove('active');
   renderPlayerArea();
+  saveGameState();
 }
 
 function cancelRequestCard() {
@@ -227,7 +281,7 @@ function renderPlayerArea() {
 
 // Event Listeners
 deckEl.addEventListener('click', drawCard);
-shuffleBtn.addEventListener('click', initializeGame);
+shuffleBtn.addEventListener('click', () => initializeGame(true));
 startTurnBtn.addEventListener('click', startTurn);
 endTurnBtn.addEventListener('click', endTurn);
 
