@@ -1,4 +1,41 @@
 import './style.css';
+import cardsCsvText from '../../csv/cards.csv?raw';
+
+function parseCSV(str) {
+  const arr = [];
+  let quote = false;
+  for (let row = 0, col = 0, c = 0; c < str.length; c++) {
+    let cc = str[c], nc = str[c + 1];
+    arr[row] = arr[row] || [];
+    arr[row][col] = arr[row][col] || '';
+
+    if (cc == '"' && quote && nc == '"') { arr[row][col] += cc; ++c; continue; }
+    if (cc == '"') { quote = !quote; continue; }
+    if (cc == ',' && !quote) { ++col; continue; }
+    if (cc == '\r' && nc == '\n' && !quote) { ++row; col = 0; ++c; continue; }
+    if (cc == '\n' && !quote) { ++row; col = 0; continue; }
+    if (cc == '\r' && !quote) { ++row; col = 0; continue; }
+    arr[row][col] += cc;
+  }
+  return arr;
+}
+
+const rows = parseCSV(cardsCsvText);
+const cardColors = {};
+
+for (let i = 1; i < rows.length; i++) {
+  const columns = rows[i];
+  if (columns.length < 4 || !columns[0] || !columns[0].trim() || columns[0] === 'count') continue;
+
+  const name = columns[0].trim();
+  const type = columns[1].trim();
+  const bgColor = columns[2].trim();
+  
+  if (type.toLowerCase() !== 'discard' && bgColor) {
+    const cleanName = name.replace(/[/\\?%*:|"<>]/g, '-');
+    cardColors[cleanName] = `#${bgColor.replace('#', '')}`;
+  }
+}
 
 // Load all card images
 const cardModules = import.meta.glob('../../image/*.png', { eager: true, as: 'url' });
@@ -125,9 +162,24 @@ function updateDiscardPile() {
   if (discardPile.length === 0) {
     discardPileEl.classList.add('empty');
     discardPileEl.style.backgroundImage = 'none';
+    discardPileEl.style.borderColor = 'var(--border-color)';
+    discardPileEl.style.borderWidth = '3px';
   } else {
     discardPileEl.classList.remove('empty');
-    discardPileEl.style.backgroundImage = `url(${discardPile[discardPile.length - 1]})`;
+    const topCardUrl = discardPile[discardPile.length - 1];
+    discardPileEl.style.backgroundImage = `url(${topCardUrl})`;
+    
+    let filename = topCardUrl.split('/').pop().split('?')[0];
+    let decodedName = decodeURIComponent(filename.replace('.png', ''));
+    let cleanName = decodedName.replace(/[/\\?%*:|"<>]/g, '-');
+    
+    if (cardColors[cleanName]) {
+      discardPileEl.style.borderColor = cardColors[cleanName];
+      discardPileEl.style.borderWidth = '6px';
+    } else {
+      discardPileEl.style.borderColor = 'var(--border-color)';
+      discardPileEl.style.borderWidth = '3px';
+    }
   }
 }
 
@@ -194,6 +246,18 @@ function inspectCard(index) {
   
   inspectCardEl.style.backgroundImage = `url(${cardUrl})`;
   
+  let filename = cardUrl.split('/').pop().split('?')[0];
+  let decodedName = decodeURIComponent(filename.replace('.png', ''));
+  let cleanName = decodedName.replace(/[/\\?%*:|"<>]/g, '-');
+  
+  if (cardColors[cleanName]) {
+    inspectCardEl.style.borderColor = cardColors[cleanName];
+    inspectCardEl.style.borderWidth = '6px';
+  } else {
+    inspectCardEl.style.borderColor = 'var(--border-color)';
+    inspectCardEl.style.borderWidth = '4px';
+  }
+  
   const otherPlayer = currentPlayer === 1 ? 2 : 1;
   inspectSendBtn.textContent = `Send to Player ${otherPlayer}`;
   
@@ -209,6 +273,15 @@ function createCardElement(url, index, isHand, customOnClick = null) {
   const cardDiv = document.createElement('div');
   cardDiv.className = 'card min-card';
   cardDiv.style.backgroundImage = `url(${url})`;
+  
+  let filename = url.split('/').pop().split('?')[0];
+  let decodedName = decodeURIComponent(filename.replace('.png', ''));
+  let cleanName = decodedName.replace(/[/\\?%*:|"<>]/g, '-');
+  
+  if (cardColors[cleanName]) {
+    cardDiv.style.borderColor = cardColors[cleanName];
+    cardDiv.style.borderWidth = '4px';
+  }
   
   if (isHand) {
     cardDiv.classList.add('hand-card');

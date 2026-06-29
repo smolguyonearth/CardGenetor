@@ -25,6 +25,19 @@ function parseCSV(str) {
 const csvDir = path.join(process.cwd(), 'csv');
 let csvFile = null;
 
+const cardsDir = path.join(process.cwd(), 'cards');
+let cardImageMap = {};
+if (fs.existsSync(cardsDir)) {
+    const files = fs.readdirSync(cardsDir);
+    for (const file of files) {
+        if (file.endsWith('.png')) {
+            const nameWithoutExt = file.replace('.png', '');
+            const normalized = nameWithoutExt.toUpperCase().trim();
+            cardImageMap[normalized] = file;
+        }
+    }
+}
+
 // Look for a CSV file in the /csv folder
 if (fs.existsSync(csvDir)) {
     const files = fs.readdirSync(csvDir);
@@ -84,21 +97,47 @@ const rows = parseCSV(content);
         const bgColor = columns[2].trim();
         const description = columns[3].trim();
         
+        const normalizedName = name.replace(/'/g, '_').toUpperCase().trim();
+        const matchedImage = cardImageMap[normalizedName];
+        const imageSrc = matchedImage ? `cards/${matchedImage}` : 'example/image.png';
+
         console.log(`Generating PNG for: ${name}...`);
 
         // Update the card content in the browser
-        await page.evaluate((n, t, bg, desc) => {
-            document.querySelector('.card-title').textContent = n;
+        await page.evaluate((n, t, bg, desc, imgSrc) => {
+            const titleEl = document.querySelector('.card-title');
+            titleEl.textContent = n;
+            if (n.length > 10) {
+                titleEl.style.fontSize = '70px';
+            } else {
+                titleEl.style.fontSize = '';
+            }
             document.querySelector('.card-type').innerText = t.toUpperCase() + '.';
             document.querySelector('.card-inner').style.backgroundColor = '#' + bg.replace('#', '');
-            document.querySelector('.card-subtitle').innerText = desc;
+            const subtitleEl = document.querySelector('.card-subtitle');
+            subtitleEl.innerText = desc;
+            if (desc.length > 75) {
+                subtitleEl.style.fontSize = '35px';
+            } else {
+                subtitleEl.style.fontSize = '';
+            }
+
+            const imgEl = document.querySelector('.card-image-container img');
+            if (imgEl) {
+                imgEl.src = imgSrc;
+                if (n.trim().toUpperCase() === 'UNIVERSUM PARADOX') {
+                    imgEl.style.maxWidth = '80%';
+                } else {
+                    imgEl.style.maxWidth = '';
+                }
+            }
 
             // Set text color: black for yellow background, white for everything else
             const textColor = bg.replace('#', '').toUpperCase() === 'FFC200' ? '#000' : '#fff';
             document.querySelector('.card-title').style.color = textColor;
             document.querySelector('.card-subtitle').style.color = textColor;
             document.querySelector('.card-type').style.color = textColor;
-        }, name, type, bgColor, description);
+        }, name, type, bgColor, description, imageSrc);
 
         // Wait for fonts and rendering to settle
         await page.evaluate(() => document.fonts.ready);

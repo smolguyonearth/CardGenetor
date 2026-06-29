@@ -89,7 +89,7 @@ body {
 
 .card-image-container img {
     max-width: 100%;
-    max-height: 300px; /* Prevent it from overflowing vertically */
+    max-height: 600px; /* Prevent it from overflowing vertically */
     object-fit: contain; /* Ensure it never squishes */
 }
 

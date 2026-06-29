@@ -1,0 +1,59 @@
+Name,Type,BackgroundColorCode,Description,Points (Optional),Status
+Beck's Brewery Brawl,Battle,FF60B0,Initiate a battle on a space. Both players must discard 1 random card before rolling. The winner draws 2 cards from the deck.,,ปรับแล้ว
+Brain Fog,Action,FFC200,Discard 2 Action Cards.,,ยัง
+Bremen Cathedral Shelter,Reflect,6281FF,Prevent defeat (Win = No) 1 time.,,ปรับแล้ว
+Change of Plans,Battle,FF60B0,Reroll the dice,,ยัง
+Chao Phraya Current,Reflect,6281FF,Prevent defeat and reflect damage to the enemy.,,ปรับแล้ว
+Chatuchak Discovery,Action,FFC200,"Draw 3 cards, keep 1.",,ปรับแล้ว
+Clairvoyance,Action,FFC200,Look at another player's hand.,,ยัง
+Cross-Country Flight,Action,FFC200,Teleport to any space within 3 spaces.,,ยัง
+Dejavu,Action,FFC200,Choose any Good Card effect from the discard pile and use it immediately.,,ยัง
+Double Booking,Battle,FF60B0,Force another player to Battle twice in a row on the same space.,,ปรับแล้ว
+Echoes of the Past,Action,FFC200,Ignore a negative card and return it to the deck.,,ยัง
+Epiphany ,Action,FFC200,Draw 2 cards and keep both.,,ยัง
+Fading Horizon,Reflect,6281FF,"Cancel the Claim of 1 target space, returning it to an empty space.",,ปรับแล้ว
+Fading Recollection,Reflect,6281FF,Retreat from a battle without losses.,,ยัง
+Familiar Turf,Action,FFC200,Steal a space claimed by another player and make it yours.,,ปรับแล้ว
+Flashback,Action,FFC200,Undo the last completed action.,,ปรับแล้ว
+Fleeting Thought,Action,FFC200,Move +1 space this turn.,,ยัง
+Found coin on the Footpath,Battle,FF60B0,"When rolling dice for a Battle, add +2 to your total roll.",,ปรับแล้ว
+Hijack,Battle,FF60B0,Make enermy territory nrutral by duel from any where,,ปรับแล้ว
+Inner Peace,Reflect,6281FF,Ignore all negative effects until your next turn.,,ยัง
+Intuition,Reflect,6281FF,Cancel another player's Action Card immediately (like a Counter card).,,ปรับแล้ว
+Itinerary Planning,Action,FFC200,Look at the top 5 deck cards and reorder them.,,ปรับแล้ว
+Leaving Baggage Behind,Action,FFC200,Force all players (including yourself) to discard 1 card.,,ปรับแล้ว
+Lost in the Crowd,Battle,FF60B0,"If you lose this battle, instead of taking damage or losing a territory, swap physical board positions with the winning player.",,ปรับแล้ว
+Lost Passport Panic,Battle,FF60B0,"If you win this battle, the loser cannot use any movement-related cards or special transport mechanics on their next turn.",,ปรับแล้ว
+Lucidity,Reflect,6281FF,Win ties in all battles this round.,,ยัง
+Market Square Peace,Action,FFC200,Cancel the special abilities of enemies in that space.,,ปรับแล้ว
+Memory Theft,Action,FFC200,Look at another player's hand and discard 1 card from it.,,ยัง
+Mental Backlash,Reflect,6281FF,An opponent's Action Card affects them instead of you.,,ยัง
+Missed the Stop,Action,FFC200,Move backward 1 space without encountering events or enemies.,,ปรับแล้ว
+Monsoon Downpour,Reflect,6281FF,Cancel all enemy buffs before a duel,,ปรับแล้ว
+Muddled Minds,Action,FFC200,Swap your hand with another player.,,ยัง
+Packed Bags,Action,FFC200,Return everyone's hand to the deck and redraw.,,ปรับแล้ว
+Pickpocket,Action,FFC200,Randomly steal 1 card from another player's hand.,,ปรับแล้ว
+Putting Down Roots,Battle,FF60B0,Strengthen your space (anyone trying to capture it must win 2 battles).,,ปรับแล้ว
+Repression,Reflect,6281FF,Reflect a Punishment Card back to its owner.,,ยัง
+Rest Stop,Action,FFC200,Draw 2 Action Cards immediately.,,ปรับแล้ว
+Restricted Area,Reflect,6281FF,Prevent your space from being attacked or captured by others for 1 turn.,,ปรับแล้ว
+Roland's Stature,Reflect,6281FF,Protect the character from being pushed or warped by cards.,,ปรับแล้ว
+Sanctuary,Action,FFC200,Warp yourself to the nearest Empty Space immediately.,,ปรับแล้ว
+Sanctuary of the Mind,Reflect,6281FF,Cannot be attacked until your next turn.,,ปรับแล้ว
+Second Wind,Action,FFC200,Gain an extra turn immediately after your turn ends.,,ปรับแล้ว
+Serendipity,Action,FFC200,Choose any card from the deck and play it.,,ปรับแล้ว
+Serenity Citizens' Park,Reflect,6281FF,Forbid all players from using Action Cards on the next turn.,,ปรับแล้ว
+Siam Traffic Stall,Action,FFC200,"This turn, all movement-related cards have double effect.",,ปรับแล้ว
+Soi Labyrinth,Action,FFC200,Your first movement this turn is cancelled.,,ปรับแล้ว
+Souvenir Swap,Action,FFC200,Steal random card,,ยัง
+Stolen Journal,Action,FFC200,Look at a player's hand. They must give you one card or lose 3 territories.,,ปรับแล้ว
+Street Photo Mimic,Action,FFC200,Copy the effect of the last card used by someone.,,ปรับแล้ว
+Sudden Clarity,Reflect,6281FF,Ignore one Punishment card.,,ยัง
+Synapse Leap,Action,FFC200,Teleport to an adjacent empty space.,,ยัง
+The Last Stand,Battle,FF60B0,"Bet all your currently held action cards on this battle. If you win, double the space's victory value. If you lose, discard your entire hand.",,ปรับแล้ว
+Tourist Trap,Action,FFC200,Place a trap forcing anyone who lands on this space to stop moving for 1 turn.,,ปรับแล้ว
+Town Musicians Tactics,Reflect,6281FF,Ignore the result of a lost battle once.,,ปรับแล้ว
+Train of Thought,Action,FFC200,Move +2 space this turn.,,ยัง
+Travel Guidebook,Action,FFC200,Player can see next three card,,ยัง
+Universum Paradox,Battle,FF60B0,Play during a battle. Invert the rules of the outcome: the player with the lower battle score wins the engagement.,,ปรับแล้ว
+Wanderlust,Action,FFC200,Jump over 1 space (skip a Battle space without fighting).,,ปรับแล้ว

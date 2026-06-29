@@ -4,5 +4,7 @@ node_modules/
 # Generated output
 image/
 
+cards/
+
 # OS generated files
 .DS_Store
