@@ -78,7 +78,7 @@ const giveCardHandEl = document.getElementById('give-card-hand');
 const giveCardCancelBtn = document.getElementById('give-card-cancel-btn');
 
 // Initialize back image on deck
-deckEl.style.backgroundImage = `url(${backImageUrl})`;
+deckEl.style.backgroundImage = `url("${backImageUrl}")`;
 
 function saveGameState() {
   const state = {
@@ -167,7 +167,7 @@ function updateDiscardPile() {
   } else {
     discardPileEl.classList.remove('empty');
     const topCardUrl = discardPile[discardPile.length - 1];
-    discardPileEl.style.backgroundImage = `url(${topCardUrl})`;
+    discardPileEl.style.backgroundImage = `url("${topCardUrl}")`;
     
     let filename = topCardUrl.split('/').pop().split('?')[0];
     let decodedName = decodeURIComponent(filename.replace('.png', ''));
@@ -244,7 +244,7 @@ function inspectCard(index) {
   currentlyInspectedIndex = index;
   const cardUrl = hands[currentPlayer][index];
   
-  inspectCardEl.style.backgroundImage = `url(${cardUrl})`;
+  inspectCardEl.style.backgroundImage = `url("${cardUrl}")`;
   
   let filename = cardUrl.split('/').pop().split('?')[0];
   let decodedName = decodeURIComponent(filename.replace('.png', ''));
@@ -272,7 +272,7 @@ function closeInspect() {
 function createCardElement(url, index, isHand, customOnClick = null) {
   const cardDiv = document.createElement('div');
   cardDiv.className = 'card min-card';
-  cardDiv.style.backgroundImage = `url(${url})`;
+  cardDiv.style.backgroundImage = `url("${url}")`;
   
   let filename = url.split('/').pop().split('?')[0];
   let decodedName = decodeURIComponent(filename.replace('.png', ''));

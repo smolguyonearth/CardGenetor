@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Card Back Generator</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts for the typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Farsan&family=Frank+Ruhl+Libre:wght@700&family=Gveret+Levin&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- The card element that will be exported -->
+        <div class="card-wrapper" id="card-node">
+
+
+            <!-- Outer Box -->
+            <div class="card-outer">
+                <!-- Inner Box -->
+                <div class="card-inner" style="background-color: #201355; justify-content: center; align-items: center; display: flex;">
+                    <h1 class="back-title" style="color: #FCE762; font-family: 'Gveret Levin', sans-serif; font-size: 70px; text-transform: uppercase; text-align: center; margin: 0; padding: 0;">the last memory</h1>
+                </div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button id="export-btn">Download Back Image</button>
+        </div>
+    </div>
+
+    <!-- html2canvas library for highly accurate DOM capturing -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script>
+        // Single Card Export functionality
+        document.getElementById('export-btn').addEventListener('click', () => {
+            exportCardPNG('card-back.png', document.getElementById('export-btn'), 'Download Back Image');
+        });
+
+        // Helper function to export current DOM to PNG
+        function exportCardPNG(filename, btnElement, originalText) {
+            const cardElement = document.getElementById('card-node');
+            if (btnElement) {
+                btnElement.disabled = true;
+                btnElement.textContent = 'Exporting...';
+            }
+
+            return html2canvas(cardElement, {
+                backgroundColor: null, // Keep background transparent (outside the card)
+                scale: 2, // 2x resolution for crisp output
+                useCORS: true // Properly load fonts and external images
+            })
+            .then(function (canvas) {
+                const dataUrl = canvas.toDataURL('image/png');
+                // Create an invisible anchor tag to trigger the download
+                const link = document.createElement('a');
+                link.download = filename;
+                link.href = dataUrl;
+                link.click();
+
+                if (btnElement) {
+                    btnElement.disabled = false;
+                    btnElement.textContent = originalText;
+                }
+            })
+            .catch(function (error) {
+                console.error("Error generating PNG:", error);
+                alert("Failed to export image: " + filename);
+
+                if (btnElement) {
+                    btnElement.disabled = false;
+                    btnElement.textContent = originalText;
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

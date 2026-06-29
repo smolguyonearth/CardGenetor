@@ -91,6 +91,7 @@ body {
     max-width: 100%;
     max-height: 600px; /* Prevent it from overflowing vertically */
     object-fit: contain; /* Ensure it never squishes */
+    filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.5)); /* Make the character stand out */
 }
 
 .card-type {

@@ -125,7 +125,8 @@ const rows = parseCSV(content);
             const imgEl = document.querySelector('.card-image-container img');
             if (imgEl) {
                 imgEl.src = imgSrc;
-                if (n.trim().toUpperCase() === 'UNIVERSUM PARADOX') {
+                const normalizedName = n.trim().toUpperCase();
+                if (normalizedName === 'UNIVERSUM PARADOX' || normalizedName === "SERENITY CITIZENS' PARK") {
                     imgEl.style.maxWidth = '80%';
                 } else {
                     imgEl.style.maxWidth = '';

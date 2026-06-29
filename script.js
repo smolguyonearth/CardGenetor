@@ -72,7 +72,8 @@ function renderCard(index) {
         // The drive replaces ' with _ in filenames
         const fileName = card.name.replace(/'/g, '_');
         imgEl.src = `cards/${fileName}.png`;
-        if (card.name.trim().toUpperCase() === 'UNIVERSUM PARADOX') {
+        const normalizedName = card.name.trim().toUpperCase();
+        if (normalizedName === 'UNIVERSUM PARADOX' || normalizedName === "SERENITY CITIZENS' PARK") {
             imgEl.style.maxWidth = '80%';
         } else {
             imgEl.style.maxWidth = '';
