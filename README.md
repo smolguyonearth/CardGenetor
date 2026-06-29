@@ -43,3 +43,10 @@ A tool to generate and export custom cards. It provides a web-based interface to
    node generate.js
    ```
 3. The script will launch a headless browser, process each valid row in your CSV, and save the resulting PNGs into the `image/` folder.
+
+### 3. Generate Card Back Image
+1. To generate the standardized card back image, run the following script:
+   ```bash
+   node generate_back.js
+   ```
+2. The script will save `back-image.png` directly into your project folder based on the layout defined in `back.html`. You can also open `back.html` in your browser via a local server to download it manually.
