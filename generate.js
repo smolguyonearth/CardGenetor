@@ -141,7 +141,13 @@ const rows = parseCSV(content);
         }, name, type, bgColor, description, imageSrc);
 
         // Wait for fonts and rendering to settle
-        await page.evaluate(() => document.fonts.ready);
+        await page.evaluate(() => {
+            document.fonts.ready;
+            document.documentElement.style.backgroundColor = 'transparent';
+            document.body.style.backgroundColor = 'transparent';
+            const cardOuter = document.querySelector('.card-outer');
+            if (cardOuter) cardOuter.style.boxShadow = 'none';
+        });
         await new Promise(r => setTimeout(r, 300));
 
         // Screenshot just the card element as PNG

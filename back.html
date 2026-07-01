@@ -47,12 +47,25 @@
                 btnElement.textContent = 'Exporting...';
             }
 
+            const originalBodyBg = document.body.style.backgroundColor;
+            const originalHtmlBg = document.documentElement.style.backgroundColor;
+            document.body.style.backgroundColor = 'transparent';
+            document.documentElement.style.backgroundColor = 'transparent';
+            
+            const cardOuter = document.querySelector('.card-outer');
+            const originalBoxShadow = cardOuter ? cardOuter.style.boxShadow : '';
+            if (cardOuter) cardOuter.style.boxShadow = 'none';
+
             return html2canvas(cardElement, {
                 backgroundColor: null, // Keep background transparent (outside the card)
                 scale: 2, // 2x resolution for crisp output
                 useCORS: true // Properly load fonts and external images
             })
             .then(function (canvas) {
+                document.body.style.backgroundColor = originalBodyBg;
+                document.documentElement.style.backgroundColor = originalHtmlBg;
+                if (cardOuter) cardOuter.style.boxShadow = originalBoxShadow;
+
                 const dataUrl = canvas.toDataURL('image/png');
                 // Create an invisible anchor tag to trigger the download
                 const link = document.createElement('a');
@@ -66,6 +79,9 @@
                 }
             })
             .catch(function (error) {
+                document.body.style.backgroundColor = originalBodyBg;
+                document.documentElement.style.backgroundColor = originalHtmlBg;
+                if (cardOuter) cardOuter.style.boxShadow = originalBoxShadow;
                 console.error("Error generating PNG:", error);
                 alert("Failed to export image: " + filename);
 

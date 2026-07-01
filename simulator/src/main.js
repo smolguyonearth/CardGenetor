@@ -22,6 +22,7 @@ function parseCSV(str) {
 
 const rows = parseCSV(cardsCsvText);
 const cardColors = {};
+const discardCardNames = new Set();
 
 for (let i = 1; i < rows.length; i++) {
   const columns = rows[i];
@@ -31,8 +32,11 @@ for (let i = 1; i < rows.length; i++) {
   const type = columns[1].trim();
   const bgColor = columns[2].trim();
   
-  if (type.toLowerCase() !== 'discard' && bgColor) {
-    const cleanName = name.replace(/[/\\?%*:|"<>]/g, '-');
+  const cleanName = name.replace(/[/\\?%*:|"<>]/g, '-');
+
+  if (type.toLowerCase() === 'discard') {
+    discardCardNames.add(cleanName);
+  } else if (bgColor) {
     cardColors[cleanName] = `#${bgColor.replace('#', '')}`;
   }
 }
@@ -41,7 +45,15 @@ for (let i = 1; i < rows.length; i++) {
 const cardModules = import.meta.glob('../../image/*.png', { eager: true, as: 'url' });
 import backImageUrl from '../../back_image/image.png?url';
 
-const allCards = Object.values(cardModules);
+let allCards = Object.values(cardModules);
+
+// Filter out Discard cards
+allCards = allCards.filter(url => {
+  let filename = url.split('/').pop().split('?')[0];
+  let decodedName = decodeURIComponent(filename.replace('.png', ''));
+  let cleanName = decodedName.replace(/[/\\?%*:|"<>]/g, '-');
+  return !discardCardNames.has(cleanName);
+});
 
 // Game State
 let deck = [];

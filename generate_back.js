@@ -26,6 +26,14 @@ const puppeteer = require('puppeteer');
     // Wait for fonts and rendering to settle
     await new Promise(r => setTimeout(r, 500));
 
+    // Make body transparent and remove shadow to prevent black corners in Word
+    await page.evaluate(() => {
+        document.documentElement.style.backgroundColor = 'transparent';
+        document.body.style.backgroundColor = 'transparent';
+        const cardOuter = document.querySelector('.card-outer');
+        if (cardOuter) cardOuter.style.boxShadow = 'none';
+    });
+
     // Screenshot just the card element as PNG
     const cardElement = await page.$('#card-node');
     const outPath = path.join(process.cwd(), 'back_image/image.png');
